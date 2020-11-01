@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!--控制台日志，会打印到catalina.out文件中-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!--日志编码-->
+        <encoding>UTF-8</encoding>
+        <!--日志格式-->
+        <encoder>
+            <pattern>[%d{HH:mm:ss.SSS}][%p][%c{40}][%t] %m%n</pattern>
+        </encoder>
+        <!--日志等级为>=DEBUG，方便查看mybatis执行的SQL语句-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+    <!--项目日志，根据日期自动覆盖-->
+    <appender name="backend" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志路径-->
+        <File>/e/environment/apache-tomcat-9.0.39/logs/backend.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/e/environment/apache-tomcat-9.0.39/logs/backend.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <append>true</append>
+            <!--储存30天-->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <!--日志格式-->
+        <encoder>
+            <pattern>[%d{HH:mm:ss.SSS}][%p][%c{40}][%t] %m%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!--错误日志-->
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志路径-->
+        <File>/e/environment/apache-tomcat-9.0.39/logs/error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/e/environment/apache-tomcat-9.0.39/logs/error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <append>true</append>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%d{HH:mm:ss.SSS}][%p][%c{40}][%t] %m%n</pattern>
+        </encoder>
+        <!--过滤非ERROR级别日志-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+
+    <!--INFO级别日志，不向上继承-->
+    <logger name="com.project.backend" additivity="false" level="INFO" >
+        <appender-ref ref="backend" />
+        <appender-ref ref="console"/>
+    </logger>
+
+
+    <!-- mybatis log 日志 -->
+
+    <!--日志等级为DEBUG，方便查看mybatis执行的SQL语句-->
+    <logger name="com.project.backend.dao" level="DEBUG"/>
+
+    <!--<logger name="java.sql.Connection" level="DEBUG">-->
+    <!--<appender-ref ref="console"/>-->
+    <!--</logger>-->
+
+    <!--<logger name="java.sql.Statement" level="DEBUG">-->
+    <!--<appender-ref ref="console"/>-->
+    <!--</logger>-->
+
+    <!--<logger name="java.sql.PreparedStatement" level="DEBUG">-->
+    <!--<appender-ref ref="console"/>-->
+    <!--</logger>-->
+
+    <!--根节点日志，DEBUG级别-->
+    <root level="DEBUG">
+        <appender-ref ref="console"/>
+        <appender-ref ref="error"/>
+    </root>
+
+</configuration>
