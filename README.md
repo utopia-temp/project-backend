@@ -31,4 +31,14 @@
     * resources:  
         * @`UserMapper.xml`: 用户名查询，用户名、密码查询  
         * @`logback.xml`: 修改日志位置
-        
+* 2020-11-3
+    * java:
+        * @`UserController.java`: 登出、注册、校验功能
+        * @`IUserService.java`: 注册、校验功能
+        * @`IUserServiceImpl.java`: 注册、校验功能
+        * @`UserMapper.java`: email查询
+        * @`Const.java`: 用户角色、待判断类型轻量级枚举
+        * +`MD5Util`: MD5加密工具类
+        * +`PropertiesUtil`: Properties配置文件工具类
+    * resources:  
+        * @`UserMapper.xml`: email查询

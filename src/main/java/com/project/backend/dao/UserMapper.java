@@ -32,4 +32,12 @@ public interface UserMapper {
      * @return 查询后的用户
      */
     User selectUser(@Param("username") String username, @Param("password") String password);
+
+    /**
+     * 检查email是否存在
+     *
+     * @param email email
+     * @return 查询的email匹配行数量
+     */
+    int checkEmail(String email);
 }
