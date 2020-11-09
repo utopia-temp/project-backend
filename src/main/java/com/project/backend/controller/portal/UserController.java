@@ -78,11 +78,57 @@ public class UserController {
      * @param type  待判断类型
      * @return 服务器响应对象
      */
-    //映射URL为checkValid.do，方法为POST
-    @RequestMapping(value = "register.do", method = RequestMethod.POST)
+    //映射URL为check_valid.do，方法为POST
+    @RequestMapping(value = "check_valid.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> checkValid(String input, String type) {
         return iUserService.checkValid(input, type);
     }
 
+    /**
+     * 获取用户信息
+     *
+     * @param session 用户会话
+     * @return 服务器响应对象 - 用户信息
+     */
+    //映射URL为get_user_info.do，方法为GET
+    @RequestMapping(value = "get_user_info.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<User> getUserInfo(HttpSession session) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+
+        if (user != null) {
+            return ServerResponse.createBySuccess(user);
+        }
+
+        return ServerResponse.createByErrorMessage("用户信息获取失败，用户未登录");
+    }
+
+    /**
+     * 获取用户密码提示问题
+     *
+     * @param username 用户名
+     * @return 服务器响应对象
+     */
+    //映射URL为forget_pwd_question.do，方法为GET
+    @RequestMapping(value = "forget_pwd_question.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> forgetPwdQuestion(String username) {
+        return iUserService.forgetPwdQuestion(username);
+    }
+
+    /**
+     * 用户秘密提示问题答案
+     *
+     * @param username 用户名
+     * @param question 密码提示问题
+     * @param answer   密码提示问题答案
+     * @return 服务器响应对象 - Token
+     */
+    //映射URL为forget_pwd_question_answer.do，方法为GET
+    @RequestMapping(value = "forget_pwd_question_answer.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> forgetPwdQuestionAnswer(String username, String question, String answer) {
+        return iUserService.forgetPwdQuestionAnswer(username, question, answer);
+    }
 }

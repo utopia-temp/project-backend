@@ -172,4 +172,18 @@
         from project_user
         where email = #{email}
     </select>
+
+    <select id="selectQuestion" parameterType="string" resultType="string">
+        select question
+        from project_user
+        where username = #{username}
+    </select>
+
+    <select id="checkAnswer" parameterType="map" resultType="int">
+        select count(1)
+        from project_user
+        where username = #{username}
+        and question = #{question}
+        and answer = #{answer}
+    </select>
 </mapper>

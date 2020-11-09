@@ -42,3 +42,11 @@
         * +`PropertiesUtil`: Properties配置文件工具类
     * resources:  
         * @`UserMapper.xml`: email查询
+* 2020-11-9
+    * java:
+        * @`UserController.java`: 获取用户信息、获取密码提示问题，判断密码提示问题答案是否正确功能
+        * @`IUserService.java`: 获取用户信息、获取密码提示问题，判断密码提示问题答案是否正确功能
+        * @`IUserServiceImpl.java`: 获取用户信息、获取密码提示问题，判断密码提示问题答案是否正确功能
+        * @`UserMapper.java`: 获取用户信息、获取密码提示问题，判断密码提示问题答案是否正确功能
+        * +`TokenCache.java`: 基于Guava的本地缓存实现 
+        

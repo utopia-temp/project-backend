@@ -33,4 +33,22 @@ public interface IUserService {
      * @return 服务响应对象
      */
     ServerResponse<String> checkValid(String input, String type);
+
+    /**
+     * 获取用户密码提示问题
+     *
+     * @param username 用户名
+     * @return 服务响应对象
+     */
+    ServerResponse<String> forgetPwdQuestion(String username);
+
+    /**
+     * 密码提示问题答案
+     *
+     * @param username 用户名
+     * @param question 密码提示问题
+     * @param answer   密码提示问题答案
+     * @return 服务响应对象 - token
+     */
+    ServerResponse<String> forgetPwdQuestionAnswer(String username, String question, String answer);
 }

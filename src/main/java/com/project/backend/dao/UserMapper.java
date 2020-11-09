@@ -40,4 +40,22 @@ public interface UserMapper {
      * @return 查询的email匹配行数量
      */
     int checkEmail(String email);
+
+    /**
+     * 查询密码提示问题
+     *
+     * @param username 用户名
+     * @return 密码提示问题
+     */
+    String selectQuestion(String username);
+
+    /**
+     * 判断密码提示问题答案是否正确
+     *
+     * @param username 用户名
+     * @param question 密码提示问题
+     * @param answer   问题答案
+     * @return 符合条件的行数
+     */
+    int checkAnswer(@Param("username") String username, @Param("question") String question, @Param("answer") String answer);
 }
