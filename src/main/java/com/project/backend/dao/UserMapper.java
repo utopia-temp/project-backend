@@ -58,4 +58,13 @@ public interface UserMapper {
      * @return 符合条件的行数
      */
     int checkAnswer(@Param("username") String username, @Param("question") String question, @Param("answer") String answer);
+
+    /**
+     * 根据用户名重置密码
+     *
+     * @param username    用户名
+     * @param passwordNew 新密码
+     * @return 生效的行数
+     */
+    int updatePasswordByUsername(@Param("username") String username, @Param("passwordNew") String passwordNew);
 }

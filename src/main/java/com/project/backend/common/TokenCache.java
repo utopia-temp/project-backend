@@ -16,6 +16,9 @@ public class TokenCache {
 
     private static Logger logger = LoggerFactory.getLogger(TokenCache.class);
 
+    //Token前缀
+    public static final String TOKEN_PREFIX = "token_";
+
     //基于调用链创建本地缓存
     /*
      * <key, value> - <String, String>

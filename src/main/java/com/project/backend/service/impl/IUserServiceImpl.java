@@ -154,9 +154,50 @@ public class IUserServiceImpl implements IUserService {
             //利用UUID生成token
             String forgetToken = UUID.randomUUID().toString();
             //将token设置到Guava本地缓存中
-            TokenCache.set("token_" + username, forgetToken);
+            TokenCache.set(TokenCache.TOKEN_PREFIX + username, forgetToken);
             return ServerResponse.createBySuccess(forgetToken);
         }
         return ServerResponse.createByErrorMessage("密码提示问题答案错误");
+    }
+
+    /**
+     * 根据用户名重置用户密码
+     *
+     * @param username    用户名
+     * @param passwordNew 新密码
+     * @param forgetToken 重置密码的token
+     * @return 服务响应对象
+     */
+    @Override
+    public ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken) {
+        //判断传回token不为空
+        if (StringUtils.isBlank(forgetToken)) {
+            return ServerResponse.createByErrorMessage("参数错误，需要传递token");
+        }
+
+        if (checkValid(username, Const.InputType.USERNAME).isSuccess()) {
+            return ServerResponse.createByErrorMessage("用户名不存在");
+        }
+
+        //获取本地token
+        String localToken = TokenCache.getValue(TokenCache.TOKEN_PREFIX + username);
+        if (StringUtils.isBlank(localToken)) {
+            return ServerResponse.createByErrorMessage("本地token无效或过期");
+        }
+
+        //对比本地token和传回的token
+        if (StringUtils.equals(localToken, forgetToken)) {
+            //新密码MD5加密
+            String md5PasswordNew = MD5Util.MD5EncodeUtf8(passwordNew);
+
+            int count = userMapper.updatePasswordByUsername(username, md5PasswordNew);
+            if (count > 0) {
+                return ServerResponse.createBySuccessMessage("修改密码成功");
+            }
+        } else {
+            ServerResponse.createByErrorMessage("token校验错误，请重新获取重置密码的token");
+        }
+
+        return ServerResponse.createByErrorMessage("修改密码失败");
     }
 }

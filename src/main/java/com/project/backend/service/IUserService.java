@@ -51,4 +51,14 @@ public interface IUserService {
      * @return 服务响应对象 - token
      */
     ServerResponse<String> forgetPwdQuestionAnswer(String username, String question, String answer);
+
+    /**
+     * 根据用户名重置用户密码
+     *
+     * @param username    用户名
+     * @param passwordNew 新密码
+     * @param forgetToken 重置密码的token
+     * @return 服务器响应对象
+     */
+    ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken);
 }

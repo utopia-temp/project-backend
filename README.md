@@ -49,4 +49,11 @@
         * @`IUserServiceImpl.java`: 获取用户信息、获取密码提示问题，判断密码提示问题答案是否正确功能
         * @`UserMapper.java`: 获取用户信息、获取密码提示问题，判断密码提示问题答案是否正确功能
         * +`TokenCache.java`: 基于Guava的本地缓存实现 
+* 2020-11-10
+    * java:
+        * @`UserController.java`: 重置密码功能
+        * @`IUserService.java`: 重置密码功能
+        * @`IUserServiceImpl.java`: 重置密码功能
+        * @`UserMapper.java`: 重置密码功能
+        * +`TokenCache.java`: 将token前缀抽离成常量
         
