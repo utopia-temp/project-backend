@@ -193,4 +193,11 @@
         update_time = now()
         where username = #{username}
     </update>
+
+    <select id="checkPassword" parameterType="map" resultType="int">
+        select count(1)
+        from project_user
+        where id = #{userId}
+        and password = #{passwordOld}
+    </select>
 </mapper>

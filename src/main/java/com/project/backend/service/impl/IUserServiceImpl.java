@@ -7,6 +7,7 @@ import com.project.backend.dao.UserMapper;
 import com.project.backend.pojo.User;
 import com.project.backend.service.IUserService;
 import com.project.backend.util.MD5Util;
+import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -200,4 +201,34 @@ public class IUserServiceImpl implements IUserService {
 
         return ServerResponse.createByErrorMessage("修改密码失败");
     }
+
+    /**
+     * 登录状态下修改密码
+     *
+     * @param passwordOld 旧密码
+     * @param passwordNew 新密码
+     * @param user        用户对象
+     * @return 服务响应对象
+     */
+    @Override
+    public ServerResponse<String> resetPasswordLogin(String passwordOld, String passwordNew, User user) {
+        /*判断旧密码输入是否匹配，
+         *传入userId进行双重认证，防止撞库破解密码
+         */
+        int count = userMapper.checkPassword(MD5Util.MD5EncodeUtf8(passwordOld), user.getId());
+        if (count == 0) {
+            return ServerResponse.createByErrorMessage("旧密码输入错误");
+        }
+
+        //设置用户新密码
+        user.setPassword(MD5Util.MD5EncodeUtf8(passwordNew));
+        //数据库更新新密码
+        int updateCount = userMapper.updateByPrimaryKeySelective(user);
+        if (updateCount > 0) {
+            return ServerResponse.createBySuccessMessage("密码修改成功");
+        }
+
+        return ServerResponse.createByErrorMessage("密码修改失败");
+    }
+
 }

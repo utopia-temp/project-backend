@@ -56,4 +56,9 @@
         * @`IUserServiceImpl.java`: 重置密码功能
         * @`UserMapper.java`: 重置密码功能
         * +`TokenCache.java`: 将token前缀抽离成常量
-        
+* 2020-11-11
+    * java:
+        * @`UserController.java`: 登录状态下修改密码功能
+        * @`IUserService.java`: 登录状态下修改密码功能
+        * @`IUserServiceImpl.java`: 登录状态下修改密码功能
+        * @`UserMapper.java`: 登录状态下修改密码功能 

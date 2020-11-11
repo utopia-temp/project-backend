@@ -67,4 +67,14 @@ public interface UserMapper {
      * @return 生效的行数
      */
     int updatePasswordByUsername(@Param("username") String username, @Param("passwordNew") String passwordNew);
+
+    /**
+     * 检查旧密码是否正确
+     * 通过传入用户id进行双重认证，防止暴力撞库破解密码
+     *
+     * @param passwordOld 旧密码
+     * @param userId      用户id
+     * @return 符合条件的行数
+     */
+    int checkPassword(@Param("passwordOld") String passwordOld, @Param("userId") Integer userId);
 }

@@ -146,4 +146,24 @@ public class UserController {
     public ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken) {
         return iUserService.forgetResetPassword(username, passwordNew, forgetToken);
     }
+
+    /**
+     * 登录状态修改密码
+     *
+     * @param session     用户会话
+     * @param passwordOld 旧密码
+     * @param passwordNew 新密码
+     * @return 服务器响应对象
+     */
+    //映射URL为reset_password_login.do，方法为GET
+    @RequestMapping(value = "reset_password_login.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> resetPasswordLogin(HttpSession session, String passwordOld, String passwordNew) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+
+        return iUserService.resetPasswordLogin(passwordOld, passwordNew, user);
+    }
 }
