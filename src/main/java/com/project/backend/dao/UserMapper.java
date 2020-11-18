@@ -77,4 +77,14 @@ public interface UserMapper {
      * @return 符合条件的行数
      */
     int checkPassword(@Param("passwordOld") String passwordOld, @Param("userId") Integer userId);
+
+    /**
+     * 检查email未被其他用户占用
+     *
+     * @param email  用户email
+     * @param userId 用户id
+     * @return 符合条件的行数
+     */
+    int checkEmailByUserId(@Param("email") String email, @Param("userId") Integer userId);
+
 }

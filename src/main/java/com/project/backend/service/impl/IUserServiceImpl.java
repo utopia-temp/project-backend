@@ -231,4 +231,33 @@ public class IUserServiceImpl implements IUserService {
         return ServerResponse.createByErrorMessage("密码修改失败");
     }
 
+    /**
+     * 登录状态下更新用户信息
+     *
+     * @param user 用户对象
+     * @return 服务响应对象
+     */
+    @Override
+    public ServerResponse<User> updateInformation(User user) {
+        //保证email地址未被其他用户使用
+        int count = userMapper.checkEmailByUserId(user.getUsername(), user.getId());
+        if (count > 0) {
+            return ServerResponse.createByErrorMessage("此email已存在");
+        }
+
+        User updateUser = new User();
+        //setId进行update操作，否则就没有id，会变成新增操作
+        updateUser.setId(user.getId());
+        updateUser.setPhone(user.getPhone());
+        updateUser.setEmail(user.getEmail());
+        updateUser.setQuestion(user.getQuestion());
+        updateUser.setAnswer(user.getAnswer());
+
+        int updateCount = userMapper.updateByPrimaryKeySelective(updateUser);
+        if (updateCount > 0) {
+            return ServerResponse.createBySuccess("登录状态下，用户信息更新成功", updateUser);
+        }
+        return ServerResponse.createByErrorMessage("登录状态下，用户信息更新失败");
+    }
+
 }

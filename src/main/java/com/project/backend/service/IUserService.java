@@ -71,4 +71,12 @@ public interface IUserService {
      * @return 服务器响应对象
      */
     ServerResponse<String> resetPasswordLogin(String passwordOld, String passwordNew, User user);
+
+    /**
+     * 登录状态更新用户信息
+     *
+     * @param user 用户对象
+     * @return 服务响应对象
+     */
+    ServerResponse<User> updateInformation(User user);
 }

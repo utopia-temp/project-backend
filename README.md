@@ -62,3 +62,10 @@
         * @`IUserService.java`: 登录状态下修改密码功能
         * @`IUserServiceImpl.java`: 登录状态下修改密码功能
         * @`UserMapper.java`: 登录状态下修改密码功能 
+* 2020-11-18
+    * java:
+        * @`UserController.java`: 登录状态下修改用户信息
+        * @`IUserService.java`: 登录状态下修改用户信息
+        * @`IUserServiceImpl.java`: 登录状态下修改用户信息
+        * @`UserMapper.java`: 登录状态下修改用户信息
+        * @`UserMapper.xml`: 查询email未被其他用户占用

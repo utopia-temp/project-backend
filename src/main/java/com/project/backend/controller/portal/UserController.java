@@ -166,4 +166,33 @@ public class UserController {
 
         return iUserService.resetPasswordLogin(passwordOld, passwordNew, user);
     }
+
+    /**
+     * 登录状态更新用户信息
+     *
+     * @param session 用户会话
+     * @param user    用户对象
+     * @return 服务器响应对象
+     */
+    //映射URL为update_information.do，方法为GET
+    @RequestMapping(value = "update_information.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<User> update_information(HttpSession session, User user) {
+        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+        if (currentUser == null) {
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+
+        //设置用户的id不能被修改
+        user.setId(currentUser.getId());
+        //设置用户名不能被修改，保证返回时username的正确性
+        user.setUsername(currentUser.getUsername());
+
+        ServerResponse<User> response = iUserService.updateInformation(user);
+        if (response.isSuccess()) {
+            session.setAttribute(Const.CURRENT_USER, response.getData());
+        }
+
+        return response;
+    }
 }

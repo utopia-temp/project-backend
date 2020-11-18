@@ -200,4 +200,11 @@
         where id = #{userId}
         and password = #{passwordOld}
     </select>
+
+    <select id="checkEmailByUserId" parameterType="map" resultType="int">
+        select count (1)
+        from project_user
+        where email = #{email}
+        and id = #{userId}
+    </select>
 </mapper>
