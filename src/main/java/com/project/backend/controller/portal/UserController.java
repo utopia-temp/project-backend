@@ -1,6 +1,7 @@
 package com.project.backend.controller.portal;
 
 import com.project.backend.common.Const;
+import com.project.backend.common.ResponseCode;
 import com.project.backend.common.ServerResponse;
 import com.project.backend.pojo.User;
 import com.project.backend.service.IUserService;
@@ -50,8 +51,8 @@ public class UserController {
      * @param session 用户会话
      * @return 服务器响应对象
      */
-    //映射URL为logout.do，方法为GET
-    @RequestMapping(value = "logout.do", method = RequestMethod.GET)
+    //映射URL为logout.do，方法为POST
+    @RequestMapping(value = "logout.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> logout(HttpSession session) {
         session.removeAttribute(Const.CURRENT_USER);
@@ -91,8 +92,8 @@ public class UserController {
      * @param session 用户会话
      * @return 服务器响应对象 - 用户信息
      */
-    //映射URL为get_user_info.do，方法为GET
-    @RequestMapping(value = "get_user_info.do", method = RequestMethod.GET)
+    //映射URL为get_user_info.do，方法为POST
+    @RequestMapping(value = "get_user_info.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> getUserInfo(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -110,8 +111,8 @@ public class UserController {
      * @param username 用户名
      * @return 服务器响应对象
      */
-    //映射URL为forget_pwd_question.do，方法为GET
-    @RequestMapping(value = "forget_pwd_question.do", method = RequestMethod.GET)
+    //映射URL为forget_pwd_question.do，方法为POST
+    @RequestMapping(value = "forget_pwd_question.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> forgetPwdQuestion(String username) {
         return iUserService.forgetPwdQuestion(username);
@@ -125,8 +126,8 @@ public class UserController {
      * @param answer   密码提示问题答案
      * @return 服务器响应对象 - Token
      */
-    //映射URL为forget_pwd_question_answer.do，方法为GET
-    @RequestMapping(value = "forget_pwd_question_answer.do", method = RequestMethod.GET)
+    //映射URL为forget_pwd_question_answer.do，方法为POST
+    @RequestMapping(value = "forget_pwd_question_answer.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> forgetPwdQuestionAnswer(String username, String question, String answer) {
         return iUserService.forgetPwdQuestionAnswer(username, question, answer);
@@ -140,8 +141,8 @@ public class UserController {
      * @param forgetToken 重置密码的token
      * @return 服务器响应对象
      */
-    //映射URL为forget_reset_password.do，方法为GET
-    @RequestMapping(value = "forget_reset_password.do", method = RequestMethod.GET)
+    //映射URL为forget_reset_password.do，方法为POST
+    @RequestMapping(value = "forget_reset_password.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken) {
         return iUserService.forgetResetPassword(username, passwordNew, forgetToken);
@@ -155,8 +156,8 @@ public class UserController {
      * @param passwordNew 新密码
      * @return 服务器响应对象
      */
-    //映射URL为reset_password_login.do，方法为GET
-    @RequestMapping(value = "reset_password_login.do", method = RequestMethod.GET)
+    //映射URL为reset_password_login.do，方法为POST
+    @RequestMapping(value = "reset_password_login.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> resetPasswordLogin(HttpSession session, String passwordOld, String passwordNew) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -174,8 +175,8 @@ public class UserController {
      * @param user    用户对象
      * @return 服务器响应对象
      */
-    //映射URL为update_information.do，方法为GET
-    @RequestMapping(value = "update_information.do", method = RequestMethod.GET)
+    //映射URL为update_information.do，方法为POST
+    @RequestMapping(value = "update_information.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> update_information(HttpSession session, User user) {
         User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
@@ -194,5 +195,23 @@ public class UserController {
         }
 
         return response;
+    }
+
+
+    /**
+     * 获取用户信息，如用户未登录则强制登录
+     *
+     * @param session 用户会话
+     * @return 服务器相应对象
+     */
+    //映射URL为get_information.do，方法为POST
+    @RequestMapping(value = "get_information.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<User> get_information(HttpSession session) {
+        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+        if (currentUser == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "当前用户未登录，需要强制登录");
+        }
+        return iUserService.getInformation(currentUser.getId());
     }
 }

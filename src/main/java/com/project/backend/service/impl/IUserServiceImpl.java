@@ -260,4 +260,22 @@ public class IUserServiceImpl implements IUserService {
         return ServerResponse.createByErrorMessage("登录状态下，用户信息更新失败");
     }
 
+    /**
+     * 获取用户信息
+     *
+     * @param userId 用户id
+     * @return 服务器相应对象
+     */
+    @Override
+    public ServerResponse<User> getInformation(Integer userId) {
+        User currentUser = userMapper.selectByPrimaryKey(userId);
+        if (currentUser == null) {
+            return ServerResponse.createByErrorMessage("此用户不存在");
+        }
+
+        //将用户密码置为空
+        currentUser.setPassword(StringUtils.EMPTY);
+
+        return ServerResponse.createBySuccess(currentUser);
+    }
 }

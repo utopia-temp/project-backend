@@ -69,3 +69,11 @@
         * @`IUserServiceImpl.java`: 登录状态下修改用户信息
         * @`UserMapper.java`: 登录状态下修改用户信息
         * @`UserMapper.xml`: 查询email未被其他用户占用
+* 2020-11-19
+    * java:
+        * @`UserController.java`: 获取用户信息功能，修改所有请求Method为POST
+        * @`IUserService.java`: 获取用户信息功能
+        * @`IUserServiceImpl.java`: 获取用户信息功能
+        * +`UserManageController.java`: 管理员Controller 
+        * +`backend.properties`: 项目配置文件，增加MD5加密盐值
+        
