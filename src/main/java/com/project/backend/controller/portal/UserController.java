@@ -119,7 +119,7 @@ public class UserController {
     }
 
     /**
-     * 用户秘密提示问题答案
+     * 用户密码提示问题答案校验
      *
      * @param username 用户名
      * @param question 密码提示问题
@@ -186,11 +186,11 @@ public class UserController {
 
         //设置用户的id不能被修改
         user.setId(currentUser.getId());
-        //设置用户名不能被修改，保证返回时username的正确性
-        user.setUsername(currentUser.getUsername());
 
         ServerResponse<User> response = iUserService.updateInformation(user);
         if (response.isSuccess()) {
+            //设置用户名不能被修改，保证返回时username的正确性
+            response.getData().setUsername(currentUser.getUsername());
             session.setAttribute(Const.CURRENT_USER, response.getData());
         }
 

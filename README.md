@@ -76,4 +76,12 @@
         * @`IUserServiceImpl.java`: 获取用户信息功能
         * +`UserManageController.java`: 管理员Controller 
         * +`backend.properties`: 项目配置文件，增加MD5加密盐值
+* 2020-11-22
+    * java:
+        * @`UserController.java`: update_information接口优化设置username逻辑(改为在response中设置)
+        * @`IUserServiceImpl.java`:   
+            * checkValid方法`(Const.InputType.EMAIL.equals(type))`而不是`equals(input)`
+            * updateInformation方法，`user.getEmail()`而不是`user.getUsername()`
+        * +`UserMapper.xml`: checkEmailByUserId的SQL是`select count(1)`而不是`select count (1)`
+        
         

@@ -7,7 +7,6 @@ import com.project.backend.dao.UserMapper;
 import com.project.backend.pojo.User;
 import com.project.backend.service.IUserService;
 import com.project.backend.util.MD5Util;
-import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -94,19 +93,19 @@ public class IUserServiceImpl implements IUserService {
      */
     @Override
     public ServerResponse<String> checkValid(String input, String type) {
-        //待判断类型不为Blank
+        //待判断类型type不为Blank
         if (StringUtils.isNotBlank(type)) {
             //开始校验
 
             //判断email是否存在
-            if (Const.InputType.EMAIL.equals(input)) {
+            if (Const.InputType.EMAIL.equals(type)) {
                 int count = userMapper.checkEmail(input);
                 if (count > 0) {
                     return ServerResponse.createByErrorMessage("email已存在");
                 }
             }
             //判断用户名是否存在
-            if (Const.InputType.USERNAME.equals(input)) {
+            if (Const.InputType.USERNAME.equals(type)) {
                 int count = userMapper.checkUsername(input);
                 if (count > 0) {
                     return ServerResponse.createByErrorMessage("用户名已存在");
@@ -240,7 +239,7 @@ public class IUserServiceImpl implements IUserService {
     @Override
     public ServerResponse<User> updateInformation(User user) {
         //保证email地址未被其他用户使用
-        int count = userMapper.checkEmailByUserId(user.getUsername(), user.getId());
+        int count = userMapper.checkEmailByUserId(user.getEmail(), user.getId());
         if (count > 0) {
             return ServerResponse.createByErrorMessage("此email已存在");
         }
