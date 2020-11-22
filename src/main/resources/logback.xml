@@ -17,9 +17,9 @@
     <!--项目日志，根据日期自动覆盖-->
     <appender name="backend" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--日志路径-->
-        <File>/e/environment/apache-tomcat-9.0.39/logs/backend.log</File>
+        <File>E:/environment/apache-tomcat-9.0.39/logs/backend.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/e/environment/apache-tomcat-9.0.39/logs/backend.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>E:/environment/apache-tomcat-9.0.39/logs/backend.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
             <append>true</append>
             <!--储存30天-->
             <maxHistory>30</maxHistory>
@@ -34,9 +34,9 @@
     <!--错误日志-->
     <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--日志路径-->
-        <File>/e/environment/apache-tomcat-9.0.39/logs/error.log</File>
+        <File>E:/environment/apache-tomcat-9.0.39/logs/error.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/e/environment/apache-tomcat-9.0.39/logs/error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>E:/environment/apache-tomcat-9.0.39/logs/error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
             <append>true</append>
             <maxHistory>10</maxHistory>
         </rollingPolicy>
