@@ -83,5 +83,11 @@
             * checkValid方法`(Const.InputType.EMAIL.equals(type))`而不是`equals(input)`
             * updateInformation方法，`user.getEmail()`而不是`user.getUsername()`
         * +`UserMapper.xml`: checkEmailByUserId的SQL是`select count(1)`而不是`select count (1)`
+* 2020-11-25
+    * java:
+        * @`IUserServiceImpl.java`: checkAdminRole方法判断登录用户是否是管理员权限
+        * +`ICategoryServiceImpl.java`: 添加商品分类方法；更新商品分类名称方法
+        * +`CategoryManageController.java`: 添加商品分类方法；更新商品分类名称方法
         
+             
         

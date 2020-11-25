@@ -277,4 +277,20 @@ public class IUserServiceImpl implements IUserService {
 
         return ServerResponse.createBySuccess(currentUser);
     }
+
+    /**
+     * 检查用户权限，是否是管理员
+     *
+     * @param user 用户
+     * @return 服务响应对象
+     */
+    @Override
+    public ServerResponse<String> checkAdminRole(User user) {
+        if (user != null && user.getRole() == (Const.Role.ROLE_ADMIN)) {
+            return ServerResponse.createBySuccess();
+        }
+        return ServerResponse.createByError();
+    }
+
+
 }
